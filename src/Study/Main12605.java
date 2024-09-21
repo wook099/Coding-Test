@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class Main {
+public class Main12605 {
     public static void main(String[] args) throws Exception {
 
         var br = new BufferedReader(new InputStreamReader(System.in));
