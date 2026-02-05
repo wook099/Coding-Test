@@ -5,43 +5,39 @@ import java.util.StringTokenizer;
 
 public class Main {
 
+    static int[][] arr = new int[30][30];
     public static void main(String[] args) throws IOException {
 
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         int T = Integer.parseInt(br.readLine());
+        for(int i=0;i<T;i++){
 
-        while (T-- > 0) {
-            // 서쪽에는 다리 N, 동쪽에 M (N<=M)
-            StringTokenizer st = new StringTokenizer(br.readLine());
-
-            int N = Integer.parseInt(st.nextToken());
+            StringTokenizer st= new StringTokenizer(br.readLine());
+            int N= Integer.parseInt(st.nextToken());
             int M = Integer.parseInt(st.nextToken());
-            if (N > M) {
-                return;
-            }
-            int[][] dp = new int[M + 1][N + 1];
 
-//        for (int i = 0; i <= M; i++) {
-//            dp[i][0] = 1; // 0개 선택
-//        }
-//
-//        for (int i = 1; i <= M; i++) {       // 동쪽 사이트 수
-//            for (int j = 1; j <= Math.min(i, N); j++) { // 선택할 서쪽 사이트 수
-//                dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
-//            }
-//        }
-            long result = 1;
-            for (int i = 0; i < N; i++) {
-                result *= (M - i);
-                result /= (i + 1);
-            }
 
-            System.out.println(result);
-            //McN
-            //점화식 필요해보임
-            //ar[0]=M-i;
-            //ar[i]=ar[i]*ar[i-1]
-            //
+            System.out.println(combination(M, N));
         }
+
+
+    }
+
+    static int combination(int m, int n) {
+
+        if (arr[m][n] > 0) {
+            return arr[m][n];
+        }
+
+        if (m < n)
+            return 0;
+
+        if (m == n || n == 0) {
+            return arr[m][n] = 1;
+        }
+
+        return arr[m][n] = combination(m - 1, n - 1) + combination(m - 1, n);
     }
 }
