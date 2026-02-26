@@ -26,13 +26,14 @@ public class Main {
                 arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-
-        dfs(0, 0);
+        team[0]=true;
+        dfs(1, 1);
+      
         System.out.println(min);
     }
 
     static void dfs(int idx,int depth){
-
+        
         if (depth==N/2){
             cal();
             return;
