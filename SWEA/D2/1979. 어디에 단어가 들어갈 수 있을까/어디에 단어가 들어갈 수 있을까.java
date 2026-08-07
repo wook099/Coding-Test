@@ -30,75 +30,80 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-/*
-   사용하는 클래스명이 Solution 이어야 하므로, 가급적 Solution.java 를 사용할 것을 권장합니다.
-   이러한 상황에서도 동일하게 java Solution 명령으로 프로그램을 수행해볼 수 있습니다.
- */
 class Solution
 {
 	public static void main(String args[]) throws Exception
 	{
-		 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int T = Integer.parseInt(br.readLine());
+	
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+        int T = Integer.parseInt(br.readLine());
 
         for (int t = 1; t <= T; t++) {
 
-
-            int cnt=0;
-            int check=0;
             StringTokenizer st = new StringTokenizer(br.readLine());
+
             int N = Integer.parseInt(st.nextToken());
             int K = Integer.parseInt(st.nextToken());
+
             int[][] arr = new int[N][N];
 
-            for (int i = 0; i < N; i++) {
+
+            for (int i=0;i<N;i++){
                 st = new StringTokenizer(br.readLine());
-                for (int j = 0; j < N; j++)
-                    arr[i][j] = Integer.parseInt(st.nextToken());
-            }
-
-            for (int i=0;i<N;i++){
                 for (int j=0;j<N;j++){
-                    if(arr[i][j]==1){
-                        check++;
-                    }
-                    else{
-                        if(check==K) {
-                            cnt++;
-                            check = 0;
+                    arr[i][j]=Integer.parseInt(st.nextToken());
+                }
+            }
+            int result=0;
+            
+            for (int i=0;i<N;i++){
+                int cnt=0;
+                for (int j=0;j<N;j++){
+
+                    if (arr[i][j]==1){
+                        cnt++;
+                    }else {
+                        if (cnt==K){
+                            result++;
                         }
-                        else
-                            check=0;
+                        cnt=0;
                     }
-                }
-                if(check==K)
-                    cnt++;
-                check=0;
-            }
 
+                }
+                if (cnt==K){
+                    result++;
+                }
+            }
+            
             for (int i=0;i<N;i++){
+                int cnt=0;
                 for (int j=0;j<N;j++){
-                    if(arr[j][i]==1){
-                        check++;
-                    }
-                    else{
 
-                        if(check==K) {
-                            cnt++;
-                            check = 0;
-                        }else
-                            check=0;
+                    if (arr[j][i]==1){
+                        cnt++;
+                    }else {
+                        if (cnt==K){
+                            result++;
+                        }
+                        cnt=0;
                     }
                 }
-                if(check==K)
-                    cnt++;
-                check=0;
+                if (cnt==K){
+                    result++;
+                }
             }
 
-            System.out.println("#"+t+" "+cnt);
+
+            System.out.println("#" + t + " "+result);
         }
 
-	}
+
+
+
+    }
 }
