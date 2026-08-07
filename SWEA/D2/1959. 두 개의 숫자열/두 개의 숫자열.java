@@ -29,6 +29,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 /*
    사용하는 클래스명이 Solution 이어야 하므로, 가급적 Solution.java 를 사용할 것을 권장합니다.
@@ -38,61 +41,73 @@ class Solution
 {
 	public static void main(String args[]) throws Exception
 	{
-	 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int T =Integer.parseInt(br.readLine());
+        int T = Integer.parseInt(br.readLine());
 
-        for (int t=1;t<=T;t++){
+        for (int t = 1; t <= T; t++) {
 
             StringTokenizer st = new StringTokenizer(br.readLine());
 
-            int N= Integer.parseInt(st.nextToken());
-            int M= Integer.parseInt(st.nextToken());
+            int N = Integer.parseInt(st.nextToken());
+            int M = Integer.parseInt(st.nextToken());
 
-            int[] p1=new int[N];
-            int[] p2=new int[M];
+            int[] arr = new int[N];
+            int[] brr = new int[M];
 
-            st= new StringTokenizer(br.readLine());
+            st = new StringTokenizer(br.readLine());
             for (int i=0;i<N;i++){
-                p1[i]=Integer.parseInt(st.nextToken());//N
+                arr[i]=Integer.parseInt(st.nextToken());
             }
-            st= new StringTokenizer(br.readLine());
+
+            st = new StringTokenizer(br.readLine());
             for (int i=0;i<M;i++){
-                p2[i]=Integer.parseInt(st.nextToken());//M
+                brr[i]=Integer.parseInt(st.nextToken());
             }
+
+            int big=0;
+            int small=0;
             int sum=0;
-            int result=0;
-//            1 5 3
-//            3 6 -7 5 4
-            if (N>M){// P1[5] P2[3]
+            int[] barr;
+            int[] sarr;
 
-                for (int i=0;i<N-M+1;i++){ // 0~2
-                    for (int j=i;j<i+M;j++){ //012 123 234
-//                        if(i+M==N)
-//                            break;
-                        sum+=p1[j]*p2[j-i];
-                    }
-                    result=Math.max(sum,result);
-                    sum=0;
+            if(M>N){
+                big=M;
+                small=N;
+                barr = brr;
+                sarr = arr;
+            }else if(M<N){
+                big=N;
+                small=M;
+                sarr = brr;
+                barr = arr;
+            }else {
+                for (int i=0;i<M;i++){
+                    sum+=(arr[i]*brr[i]);
                 }
+                System.out.println("#" + t + " "+sum);
+                return;
             }
-            else if(N<M){// N-p1[3], M-p2[5]
 
-                for (int i=0;i<M-N+1;i++){ // 0~2 3번
-                    for (int j=i;j<i+N;j++){ //012 123 234
-                        sum+=p2[j]*p1[j-i];// 0 0 1 1 2 2/ 1 0 2 1 3 2/ 2 0 3 1 4 2
-                    }
-                    result=Math.max(sum,result);
-                    sum=0;
+            int max=0;
+            for (int i=0;i<=big-small;i++){// 0~2 0  1
+                for (int j=0;j<small;j++){// 0~2 1 2 3
+                    sum+=sarr[j]*barr[j+i];
                 }
+
+                max=Math.max(sum,max);
+                sum=0;
             }
-            else {
-                for (int i = 0; i < N; i++) {
-                    sum += p1[i] * p2[i];
-                }
-                result = sum;
-            }
-            System.out.println("#"+t+" "+result);
+
+
+
+            System.out.println("#" + t + " "+max);
+
+
         }
-	}
+
+
+
+
+    }
 }
