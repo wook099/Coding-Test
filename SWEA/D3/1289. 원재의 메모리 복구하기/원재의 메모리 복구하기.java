@@ -26,7 +26,6 @@
 //System.out.println(AB);		       				     // long 변수 1개 출력하는 예제
 /////////////////////////////////////////////////////////////////////////////////////////////
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 /*
    사용하는 클래스명이 Solution 이어야 하므로, 가급적 Solution.java 를 사용할 것을 권장합니다.
@@ -34,58 +33,43 @@ import java.io.InputStreamReader;
  */
 class Solution
 {
-	public static void main(String args[]) throws Exception
-	{
-	  BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	 public static void main(String[] args) throws Exception{
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int T = Integer.parseInt(br.readLine());
+
         for (int t = 1; t <= T; t++) {
 
-            boolean fact=true;
-
-            String S =br.readLine();
-            char[] arr=new char[S.length()];
-            for (int i=0;i<S.length();i++){
-                arr[i]=S.charAt(i);
-            }
             int cnt=0;
+//            StringTokenizer st = new StringTokenizer(br.readLine());
 
-//            for (int i=0;i<S.length();i++){
-//                if(arr[i]=='1') {
-//                    for (int j = i; j < S.length(); j++) {
-//                        if (arr[j] == '1')
-//                            arr[j] = '0';
-//                        else
-//                            arr[j] = '1';
-//                    }
-//                    cnt++;
-//
-//                }
-//
-//                for (int a=0;a<S.length();a++) {
-//                    if (arr[a] == '0')
-//                        fact = true;
-//                    else {
-//                        fact = false;
-//                        break;
-//                    }
-//                }
-//
-//                if(fact)
-//                    break;
-//
-//            }더 쉽게 푸는방법 0000이고 0010을 받아 그럼 달라질때만 바꾸고 값을 이전시키면됨
-            char pre='0';
-            for (int i=0;i<S.length();i++){
-                if(S.charAt(i)!=pre){
+            String s = br.readLine();
+//            int Tcnt= st.countTokens();
+            int scnt=s.length();
+            char[] arr= new char[scnt];
+
+            for (int i=0;i<scnt;i++){
+                arr[i]=s.charAt(i);
+            }
+
+            for (int i=0;i<scnt;i++){
+
+                if (arr[i]=='1'){
                     cnt++;
-                    pre=S.charAt(i);
-                }
 
+                    for (int j=i;j<scnt;j++){
+                        if (arr[j]=='1')
+                            arr[j]='0';
+                        else
+                            arr[j]='1';
+                    }
+                }
             }
 
 
-            System.out.println("#" + t + " "+cnt );
+
+            System.out.println("#" + t + " "+cnt);
         }
-	}
+    }
 }
