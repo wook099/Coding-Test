@@ -36,8 +36,7 @@ import java.util.StringTokenizer;
  */
 class Solution
 {
-
-    public static void main(String[] args) throws IOException {
+public static void main(String[] args) throws IOException {
 
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -50,16 +49,21 @@ class Solution
             int N = Integer.parseInt(st.nextToken());
             int M = Integer.parseInt(st.nextToken());
 
-            char[][] arr = new char[N][M];
+            int[][] arr = new int[N][3];
             for (int i = 0; i < N; i++) {
                 String s = br.readLine();
                 for (int j = 0; j < M; j++) {
-                    arr[i][j] = s.charAt(j);
+                    if (s.charAt(j)=='W')
+                        arr[i][0]++;
+                    else if (s.charAt(j)=='B')
+                        arr[i][1]++;
+                    else
+                        arr[i][2]++;
                 }
             }
 
             //W -> B -> R
-            //
+            //문자열 넣고 세주고 있지만, 애초에 cnt해서 배열에 넣어놓으면 시간 단축!
 
             int min=Integer.MAX_VALUE;
             for (int i=0;i<N-2;i++){//white
@@ -68,22 +72,15 @@ class Solution
                     int cnt=0;
 
                     for (int w = 0; w <= i; w++) {
-                        for (int m = 0; m < M; m++) {
-                            if (arr[w][m] != 'W')
-                                cnt++;
-                        }
+                        cnt+=M-arr[w][0];
                     }
 
                     for (int b = i + 1; b <= j; b++) {
-                        for (int m = 0; m < M; m++)
-                            if (arr[b][m] != 'B')
-                                cnt++;
+                        cnt+=M-arr[b][1];
                     }
 
                     for (int r = j + 1; r < N; r++) {
-                        for (int m = 0; m < M; m++)
-                            if (arr[r][m] != 'R')
-                                cnt++;
+                        cnt+=M-arr[r][2];
                     }
 
                     if (cnt < min)
