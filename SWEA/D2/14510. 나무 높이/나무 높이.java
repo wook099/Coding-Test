@@ -72,13 +72,12 @@ class Solution
 //                p=(one-two-1);
 //            }
 
-            int result =0;
-            if(one==two)
-                result=two*2;
-            else if (one>two) {
+        int result =0;
+            if (one>two) {
                 result=one*2-1;
             }else
                 result=two*2;
+
 
 
             System.out.println("#"+t+" "+result);
