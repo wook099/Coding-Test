@@ -4,68 +4,58 @@ import java.util.StringTokenizer;
 
 public class Solution {
 
-    static int[] arr;
-    static int N;
-    static int M;
-    static int min;
-    static boolean[][] bad; // 안 맞는 쌍 저장 (2차원 배열)
-    static boolean[] selected; // 현재 선택된 재료들
-    static int cnt=0;
+    static int n, m, count;
+    static int[][] m_arr;
+    static boolean[] visited;
 
-    public static void main(String[] args) throws Exception{
-
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int T = Integer.parseInt(br.readLine());
+        // 테스트 케이스 개수 읽기
+        int T = Integer.parseInt(br.readLine().trim());
 
-        for (int t=1; t<=T; t++) {
+        for (int test_case = 1; test_case <= T; test_case++) {
 
+            // 빈 줄이나 공백 처리용 StringTokenizer
             StringTokenizer st = new StringTokenizer(br.readLine());
+            n = Integer.parseInt(st.nextToken());
+            m = Integer.parseInt(st.nextToken());
 
-            N = Integer.parseInt(st.nextToken());//재료개수
-            M = Integer.parseInt(st.nextToken());//궁합안맞는 재료 개수
+            m_arr = new int[m][2];
 
-            arr = new int[N];
-            bad = new boolean[N + 1][N + 1];
-            selected = new boolean[N + 1];
-
-            for (int i=0;i<M;i++){
+            for (int i = 0; i < m; i++) {//안되는 레시피 조합
                 st = new StringTokenizer(br.readLine());
-                int a = Integer.parseInt(st.nextToken());
-                int b = Integer.parseInt(st.nextToken());
-                bad[a][b] = true;
-                bad[b][a] = true;
+                m_arr[i][0] = Integer.parseInt(st.nextToken());
+                m_arr[i][1] = Integer.parseInt(st.nextToken());
             }
-			cnt=0;
+
+            count = 0;
+            visited = new boolean[n + 1];
+
             dfs(1);
 
-            System.out.println("#"+t+" "+cnt);
-
+            System.out.println("#" + test_case + " " + count);
         }
     }
-    static void dfs(int idx){
 
-        if(idx>N){
-            cnt++;
+    public static void dfs(int num) {
+
+        for (int i = 0; i < m_arr.length; i++) {//안되는 조합 순회
+            int a = m_arr[i][0];
+            int b = m_arr[i][1];
+
+            if (visited[a] && visited[b]) return;// 이미 밟았으면 끝
+        }
+
+        if (num > n) {
+            count++;
             return;
         }
 
+        visited[num] = true;
+        dfs(num + 1);
+        visited[num] = false;
 
-        dfs(idx+1);
-
-        boolean canSelect = true;
-        for (int i = 1; i < idx; i++) {
-            if (selected[i] && bad[idx][i]) {
-                canSelect = false; // 안 맞는 재료가 이미 선택되어 있음
-                break;
-            }
-        }
-
-        if (canSelect) {
-            selected[idx] = true;  // idx번 재료 선택
-            dfs(idx + 1);          // 다음 재료 진행
-            selected[idx] = false; // 원상복구 (백트래킹)
-        }
-
+        dfs(num + 1);
     }
 }
