@@ -1,79 +1,64 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int N;
     static int[][] arr;
-    static boolean[] team;
-    static int min = Integer.MAX_VALUE;
+    static boolean[] visited;
+    static int N;
+    static int K;
+    static int min=Integer.MAX_VALUE;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         N = Integer.parseInt(br.readLine());
-
         arr = new int[N][N];
-        team = new boolean[N];
+        K=N/2;
+        visited = new boolean[N];
 
-        for (int i = 0; i < N; i++) {
+        for (int i=0;i<N;i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < N; j++) {
-                arr[i][j] = Integer.parseInt(st.nextToken());
+            for (int j=0;j<N;j++){
+                arr[i][j]=Integer.parseInt(st.nextToken());
             }
         }
-        team[0]=true;
-        dfs(1, 1);
-      
+
+        dfs(0,0);
         System.out.println(min);
     }
 
-    static void dfs(int idx,int depth){
-        
-        if (depth==N/2){
+    static void dfs(int idx, int depth) {
+        if(depth==K){
             cal();
             return;
         }
 
-        if (idx==N){
-            return;
-        }
+        for (int i=idx;i<N;i++){//0 , 1,2
 
-//        team[idx]=true;
-//        dfs(idx+1,depth+1);
-//        team[idx]=false;
-//        dfs(idx+1,depth);
-        for (int i=idx;i<N;i++){
-            team[i]=true;
+            visited[i]=true;
             dfs(i+1,depth+1);
-            team[i]=false;
+            visited[i]=false;
         }
-
     }
 
     static void cal(){
 
-        int start=0;
-        int link=0;
-        for(int i=0;i<N-1;i++){
+        int Steam=0;
+        int Lteam=0;
+        for (int i=0;i<N-1;i++){
             for (int j=i+1;j<N;j++){
-                if(team[i]&& team[j]) {
-                    start +=(arr[i][j] + arr[j][i]);
-                }else if(!team[i]&& !team[j]) {
-                    link +=(arr[i][j] + arr[j][i]);
+                if (visited[i]&&visited[j]){
+                    Steam+=arr[i][j]+arr[j][i];
+                }else if(!visited[i]&&!visited[j]){
+                    Lteam+=arr[i][j]+arr[j][i];
                 }
             }
         }
 
-        int result = Math.abs(start-link);
-        min=Math.min(result,min);
+        min=Math.min(Math.abs(Steam-Lteam),min);
     }
-
-
-
-
 }
