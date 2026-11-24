@@ -19,31 +19,33 @@ public class Main {
         c =Integer.parseInt(st.nextToken());
 
         int size = (int) Math.pow(2, N);
-
-        find(size,r,c);
+        
+        while (size>1){
+            
+            int half=size/2;
+            int area=half*half;
+            
+            if (r<half&&c<half){
+                size=half;
+            }else if(r<half&&c>=half){
+                cnt+=area;
+                c-=half;
+                size=half;
+            }else if(r>=half&&c<half){
+                cnt+=area*2;
+                r-=half;
+                size=half;
+            }else{
+                cnt+=area*3;
+                r-=half;
+                c-=half;
+                size=half;
+            }
+            
+        }
         System.out.println(cnt);
     }
-    static void find(int size,int r,int c){
-        if (size==1)
-            return;
-
-        int half =size/2;//반띵
-        int area= half*half;//너비
-
-        if (r<half&&c<half){//1사
-            find(half,r,c);
-        }else if (r<half&&c>=half){//2사
-            cnt+=area;
-            find(half, r, c-half);
-        }else if(r>=half&&c<half){//3사
-            cnt+=area*2;
-            find(half, r-half, c);
-        }else {//4사
-            cnt+=area*3;
-            find(half, r-half, c-half);
-        }
-
-    }
+ 
 
     /*
     모든칸을다 셀수없음 -> 시간초과
